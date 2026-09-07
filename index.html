@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local Shop | Fresh Finds & Daily Essentials</title>
+    <meta
+      name="description"
+      content="Simple local shop storefront with product catalogue, cart and WhatsApp ordering."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <div class="brand">
+          <span class="brand-mark">L</span>
+          <div>
+            <strong>Local Shop</strong>
+            <small>Fresh & fast</small>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Main navigation">
+          <a href="#home">Home</a>
+          <a href="#products">Products</a>
+          <a href="#cart">Cart</a>
+          <a href="#about">About</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+            <span class="theme-icon">🌙</span>
+          </button>
+          <button class="cart-pill" type="button" data-scroll="#cart">
+            <span>Cart</span>
+            <span id="cartBadge" class="badge">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <button type="button" class="mobile-nav-btn active" data-scroll="#home">
+        <span>🏠</span>
+        <small>Home</small>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-scroll="#products">
+        <span>🛒</span>
+        <small>Shop</small>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-scroll="#cart">
+        <span>🧺</span>
+        <small>Cart</small>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-scroll="#about">
+        <span>📍</span>
+        <small>About</small>
+      </button>
+    </nav>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Your neighborhood essentials</p>
+            <h1>Fresh groceries, daily needs, and kitchen favorites.</h1>
+            <p class="muted">
+              Shop local, save time, and order in minutes on WhatsApp. Prices shown are current selling prices and can vary by brand, pack size, and supplier.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-btn" href="#products">Shop now</a>
+              <a class="secondary-btn" href="#about">Visit us</a>
+            </div>
+            <ul class="trust-points">
+              <li>Same-day availability</li>
+              <li>Affordable local pricing</li>
+              <li>Easy WhatsApp ordering</li>
+            </ul>
+          </div>
+
+          <div class="hero-visual" aria-label="Featured products banner">
+            <div class="floating-card card-one">
+              <span>Fresh Vegetables</span>
+              <strong>₹199</strong>
+            </div>
+            <div class="floating-card card-two">
+              <span>Kitchen staples</span>
+              <strong>₹349</strong>
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80"
+              alt="Groceries and fresh produce"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="featured container" aria-label="Featured categories">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Popular picks</p>
+            <h2>Shop by category</h2>
+          </div>
+        </div>
+
+        <div class="category-grid" id="categoryGrid"></div>
+      </section>
+
+      <section class="catalogue container" id="products">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow">Our catalogue</p>
+            <h2>Everything your home needs</h2>
+          </div>
+          <div class="search-box">
+            <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
+          </div>
+        </div>
+
+        <div id="productGrid" class="product-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="cart-section container" id="cart">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Your order</p>
+            <h2>Cart & checkout</h2>
+          </div>
+        </div>
+
+        <div class="cart-layout">
+          <div class="cart-panel">
+            <div id="cartItems" class="cart-items"></div>
+          </div>
+
+          <aside class="summary-panel">
+            <h3>Order summary</h3>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <strong id="subtotalValue">₹0</strong>
+            </div>
+            <div class="distance-field">
+              <label for="deliveryDistanceInput">Delivery distance (km)</label>
+              <input id="deliveryDistanceInput" type="number" min="0" step="0.5" value="2" />
+            </div>
+            <div class="summary-row">
+              <span>Delivery</span>
+              <strong id="deliveryValue">₹0</strong>
+            </div>
+            <div class="summary-row total-row">
+              <span>Total</span>
+              <strong id="totalValue">₹0</strong>
+            </div>
+
+            <p class="delivery-note">Delivery charge is a flat ₹50 for every order, regardless of distance.</p>
+
+            <form id="checkoutForm" class="checkout-form">
+              <h4>Customer details</h4>
+
+              <input id="customerLatitude" type="hidden" />
+              <input id="customerLongitude" type="hidden" />
+
+              <label>
+                Full name
+                <input id="customerName" type="text" placeholder="Enter your name" required />
+              </label>
+
+              <label>
+                Mobile number
+                <input id="customerPhone" type="tel" placeholder="+91 98765 43210" required />
+              </label>
+
+              <label>
+                Address
+                <textarea id="customerAddress" rows="3" placeholder="House / street / area" required></textarea>
+              </label>
+
+              <label>
+                Landmark
+                <input id="customerLandmark" type="text" placeholder="Nearby landmark (optional)" />
+              </label>
+
+              <div class="location-row">
+                <button id="customerLocationBtn" class="secondary-btn full-width" type="button">
+                  Use my live location
+                </button>
+                <small id="customerLocationStatus">Location not shared yet</small>
+              </div>
+
+              <button type="submit" class="primary-btn full-width">Place order</button>
+            </form>
+
+            <button id="checkoutBtn" class="secondary-btn full-width" type="button">
+              Order on WhatsApp
+            </button>
+            <button id="clearCartBtn" class="ghost-btn full-width" type="button">
+              Clear cart
+            </button>
+          </aside>
+        </div>
+      </section>
+
+      <section class="orders-panel container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Order activity</p>
+            <h2>Orders dashboard</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="delivery-section container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Delivery tracking</p>
+            <h2>Delivery boy view</h2>
+          </div>
+        </div>
+
+        <div id="deliveryList" class="delivery-list"></div>
+      </section>
+
+      <section class="about container" id="about">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Visit or call</p>
+            <h2>About Local Shop</h2>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <div class="info-card">
+            <h3>Store details</h3>
+            <p>123 Market Lane, Near Main Square, Your City</p>
+            <p>Open daily: 8:00 AM – 9:30 PM</p>
+            <p>Phone: <a href="tel:+917095244790">+91 70952 44790</a></p>
+          </div>
+
+          <div class="info-card">
+            <h3>Why locals choose us</h3>
+            <ul>
+              <li>Fresh produce and trusted essentials</li>
+              <li>Friendly local service</li>
+              <li>Fast WhatsApp confirmation</li>
+              <li>Delivery: flat ₹50 for all delivery distances</li>
+              <li>Displayed prices are current selling prices and may change by brand, weight, and supplier</li>
+            </ul>
+          </div>
+
+          <div class="info-card map-card">
+            <h3>Location</h3>
+            <a
+              href="https://maps.google.com/?q=123+Market+Lane+Your+City"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open map
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin container" id="admin">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Owner access</p>
+            <h2>Admin area</h2>
+          </div>
+        </div>
+
+        <div id="adminAuthPanel" class="admin-auth-panel">
+          <div class="admin-auth-box">
+            <label for="ownerPasswordInput">Owner password</label>
+            <input id="ownerPasswordInput" type="password" placeholder="Enter admin password" />
+            <div class="form-actions">
+              <button type="button" id="ownerLoginBtn" class="primary-btn">Open admin</button>
+              <button type="button" id="ownerLogoutBtn" class="ghost-btn hidden">Logout</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="adminContent" class="admin-content hidden">
+          <div class="income-summary" id="incomeSummary"></div>
+          <button type="button" id="downloadIncomeBtn" class="secondary-btn">Download income report</button>
+
+          <div class="admin-grid">
+            <form id="productForm" class="admin-form">
+              <h3>Add or update product</h3>
+              <input type="hidden" id="productId" />
+
+              <label>
+                Product name
+                <input type="text" id="productName" required />
+              </label>
+
+              <label>
+                Category
+                <select id="productCategory" required>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Vegetables">Vegetables</option>
+                  <option value="Snacks">Snacks</option>
+                  <option value="Beverages">Beverages</option>
+                  <option value="Household">Household</option>
+                  <option value="Dairy">Dairy</option>
+                  <option value="Breakfast">Breakfast</option>
+                  <option value="Personal Care">Personal Care</option>
+                  <option value="Baby Products">Baby Products</option>
+                  <option value="Puja Items">Puja Items</option>
+                  <option value="Stationery">Stationery</option>
+                </select>
+              </label>
+
+              <label>
+                Price (₹)
+                <input type="number" id="productPrice" min="1" required />
+              </label>
+
+              <label>
+                Availability
+                <select id="productStock" required>
+                  <option value="In stock">In stock</option>
+                  <option value="Limited">Limited</option>
+                  <option value="Out of stock">Out of stock</option>
+                </select>
+              </label>
+
+              <label>
+                Image URL
+                <input type="url" id="productImage" required />
+              </label>
+
+              <label>
+                Description
+                <textarea id="productDescription" rows="3" required></textarea>
+              </label>
+
+              <div class="form-actions">
+                <button type="submit" class="primary-btn">Save product</button>
+                <button type="button" id="resetFormBtn" class="ghost-btn">Reset</button>
+              </div>
+            </form>
+
+            <div class="admin-list-panel">
+              <h3>Current products</h3>
+              <div id="adminProductList" class="admin-product-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>© 2026 Local Shop. Friendly service, everyday essentials.</p>
+        <a href="https://wa.me/917095244790" target="_blank" rel="noreferrer">Order on WhatsApp</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
